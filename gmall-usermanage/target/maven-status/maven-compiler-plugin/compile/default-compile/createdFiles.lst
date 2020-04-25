@@ -1,0 +1,4 @@
+cn\theo\gmall\usermanage\service\impl\UserServiceImpl.class
+cn\theo\gmall\usermanage\mapper\UserInfoMapper.class
+cn\theo\gmall\usermanage\controller\UserController.class
+cn\theo\gmall\usermanage\GmallUsermanageApplication.class
