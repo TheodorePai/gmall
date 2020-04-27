@@ -19,7 +19,7 @@
     <div style="margin-bottom:5px">
         <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addAttrInfo()">添加</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editAttrInfo()">编辑</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="delAttrInfo()">删除</a>
     </div>
 
     <div>
@@ -127,6 +127,9 @@ $('#ctg3ForAttrList').combobox('clear');
 
 //弹出框
         $("#dlg").dialog("open");
+        $("#attrId").val("");
+        $("#attrName").textbox('clear');
+        $('#dg_av').datagrid({url:''});
 
         // 初始化datagrid
         initAttrValueDatagrid();
@@ -135,6 +138,13 @@ $('#ctg3ForAttrList').combobox('clear');
         $('#dg_av').datagrid({url:'getAttrValueList?attrId='+attrInfoRow.id});
         $("#attrId").val(attrInfoRow.id);
         $("#attrName").textbox('setValue',attrInfoRow.attrName);
+    }
+
+    function delAttrInfo(){
+        var attrInfoRow=$("#dg").datagrid('getSelected');
+        $.post("delAttrInfo?attrId="+attrInfoRow.id,function(){
+            $("#dg").datagrid("reload");
+        })
     }
 
     function checkBeforeDialog(){

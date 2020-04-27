@@ -26,6 +26,9 @@ public class ManageServiceImpl implements ManageService {
     @Autowired
     private BaseCatalog3Mapper baseCatalog3Mapper;
 
+    @Autowired
+    private SpuInfoMapper spuInfoMapper;
+
     @Override
     public List<BaseCatalog1> getCatalog1() {
         List<BaseCatalog1> baseCatalog1List = baseCatalog1Mapper.selectAll();
@@ -90,5 +93,37 @@ public class ManageServiceImpl implements ManageService {
         }
 
     }
+
+    @Override
+    public BaseAttrInfo getAttrInfo(String attrId) {
+        // 创建属性对象
+        BaseAttrInfo attrInfo = baseAttrInfoMapper.selectByPrimaryKey(attrId);
+        // 创建属性值对象
+        BaseAttrValue baseAttrValue = new BaseAttrValue();
+        // 根据attrId字段查询对象
+        baseAttrValue.setAttrId(attrInfo.getId());
+        List<BaseAttrValue> attrValueList = baseAttrValueMapper.select(baseAttrValue);
+        // 给属性对象中的属性值集合赋值
+        attrInfo.setAttrValueList(attrValueList);
+        // 将属性对象返回
+        return attrInfo;
+    }
+
+    @Override
+    public void delAttrInfo(String attrId) {
+        BaseAttrInfo attrInfo = baseAttrInfoMapper.selectByPrimaryKey(attrId);
+        baseAttrInfoMapper.delete(attrInfo);
+        BaseAttrValue baseAttrValue4Del = new BaseAttrValue();
+        baseAttrValue4Del.setAttrId(attrInfo.getId());
+        baseAttrValueMapper.delete(baseAttrValue4Del);
+    }
+
+    @Override
+    public List<SpuInfo> getSpuInfoList(SpuInfo spuInfo) {
+        List<SpuInfo> spuInfoList = spuInfoMapper.select(spuInfo);
+        return  spuInfoList;
+
+    }
+
 
 }

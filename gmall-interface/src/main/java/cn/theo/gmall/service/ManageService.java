@@ -1,9 +1,6 @@
 package cn.theo.gmall.service;
 
-import cn.theo.gmall.bean.BaseAttrInfo;
-import cn.theo.gmall.bean.BaseCatalog1;
-import cn.theo.gmall.bean.BaseCatalog2;
-import cn.theo.gmall.bean.BaseCatalog3;
+import cn.theo.gmall.bean.*;
 
 import java.util.List;
 
@@ -17,5 +14,11 @@ public interface ManageService {
     List<BaseAttrInfo> getAttrList(String catalog3Id);
 
     void saveAttrInfo(BaseAttrInfo baseAttrInfo);
+
+    BaseAttrInfo getAttrInfo(String attrId);
+
+    void delAttrInfo(String attrId);
+
+    List<SpuInfo> getSpuInfoList(SpuInfo spuInfo);
 
 }
