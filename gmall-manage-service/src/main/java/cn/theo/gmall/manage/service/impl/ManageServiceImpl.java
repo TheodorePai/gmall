@@ -5,6 +5,7 @@ import cn.theo.gmall.manage.mapper.*;
 import cn.theo.gmall.service.ManageService;
 import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -28,6 +29,19 @@ public class ManageServiceImpl implements ManageService {
 
     @Autowired
     private SpuInfoMapper spuInfoMapper;
+
+    @Autowired
+    private BaseSaleAttrMapper baseSaleAttrMapper;
+
+    @Autowired
+    private SpuImageMapper spuImageMapper;
+
+    @Autowired
+    private SpuSaleAttrMapper spuSaleAttrMapper;
+
+    @Autowired
+    private SpuSaleAttrValueMapper spuSaleAttrValueMapper;
+
 
     @Override
     public List<BaseCatalog1> getCatalog1() {
@@ -122,6 +136,70 @@ public class ManageServiceImpl implements ManageService {
     public List<SpuInfo> getSpuInfoList(SpuInfo spuInfo) {
         List<SpuInfo> spuInfoList = spuInfoMapper.select(spuInfo);
         return  spuInfoList;
+
+    }
+
+    @Override
+    public List<BaseSaleAttr> getBaseSaleAttrList() {
+        return baseSaleAttrMapper.selectAll();
+    }
+
+    @Override
+    public void saveSpuInfo(SpuInfo spuInfo) {
+        //保存主表 通过主键存在判断是修改 还是新增
+        if(spuInfo.getId()==null||spuInfo.getId().length()==0){
+            spuInfo.setId(null);
+            spuInfoMapper.insertSelective(spuInfo);
+        }else{
+            spuInfoMapper.updateByPrimaryKey(spuInfo);
+        }
+
+        //保存图片信息 先删除 再插入
+        Example spuImageExample=new Example(SpuImage.class);
+        spuImageExample.createCriteria().andEqualTo("spuId",spuInfo.getId());
+        spuImageMapper.deleteByExample(spuImageExample);
+
+        List<SpuImage> spuImageList = spuInfo.getSpuImageList();
+        if(spuImageList!=null) {
+            for (SpuImage spuImage : spuImageList) {
+                if(spuImage.getId()!=null&&spuImage.getId().length()==0){
+                    spuImage.setId(null);
+                }
+                spuImage.setSpuId(spuInfo.getId());
+                spuImageMapper.insertSelective(spuImage);
+            }
+        }
+
+        //保存销售属性信息  先删除 再插入
+        Example spuSaleAttrExample=new Example(SpuSaleAttr.class);
+        spuSaleAttrExample.createCriteria().andEqualTo("spuId",spuInfo.getId());
+        spuSaleAttrMapper.deleteByExample(spuSaleAttrExample);
+
+        //保存销售属性值信息  先删除 再插入
+        Example spuSaleAttrValueExample=new Example(SpuSaleAttrValue.class);
+        spuSaleAttrValueExample.createCriteria().andEqualTo("spuId",spuInfo.getId());
+        spuSaleAttrValueMapper.deleteByExample(spuSaleAttrValueExample);
+
+        //保存图片信息 先删除 再插入
+        List<SpuSaleAttr> spuSaleAttrList = spuInfo.getSpuSaleAttrList();
+        if(spuSaleAttrList!=null) {
+            for (SpuSaleAttr spuSaleAttr : spuSaleAttrList) {
+                if(spuSaleAttr.getId()!=null&&spuSaleAttr.getId().length()==0){
+                    spuSaleAttr.setId(null);
+                }
+                spuSaleAttr.setSpuId(spuInfo.getId());
+                spuSaleAttrMapper.insertSelective(spuSaleAttr);
+                List<SpuSaleAttrValue> spuSaleAttrValueList = spuSaleAttr.getSpuSaleAttrValueList();
+                for (SpuSaleAttrValue spuSaleAttrValue : spuSaleAttrValueList) {
+                    if(spuSaleAttrValue.getId()!=null&&spuSaleAttrValue.getId().length()==0){
+                        spuSaleAttrValue.setId(null);
+                    }
+                    spuSaleAttrValue.setSpuId(spuInfo.getId());
+                    spuSaleAttrValueMapper.insertSelective(spuSaleAttrValue);
+                }
+            }
+
+        }
 
     }
 

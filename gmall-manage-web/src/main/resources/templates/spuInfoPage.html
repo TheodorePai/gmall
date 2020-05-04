@@ -48,7 +48,7 @@
             </div>
         </div>
 
-<!--        <div th:include="spuSaleAttrPage"></div>-->
+        <div th:include="spuSaleAttrPage"></div>
 
     </form>
 </div>
@@ -59,6 +59,8 @@
 </div>
 
 <script>
+
+
     function closeSpu(){
         $("#spu_dlg").dialog('close')
     }
@@ -246,6 +248,7 @@
         var spuSaleAttr = $('#spuSaleAttrDg').datagrid('getSelected');
         initSpuSaleAttrDlg(spuId,spuSaleAttr);
     }
+
     function saveSpu() {
         var spuInfo = {};
         //保存单独的字段

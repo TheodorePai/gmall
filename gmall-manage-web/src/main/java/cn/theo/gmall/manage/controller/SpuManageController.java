@@ -1,5 +1,6 @@
 package cn.theo.gmall.manage.controller;
 
+import cn.theo.gmall.bean.BaseSaleAttr;
 import cn.theo.gmall.bean.SpuInfo;
 import cn.theo.gmall.service.ManageService;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -31,6 +32,21 @@ public class SpuManageController {
         List<SpuInfo> spuInfoList = manageService.getSpuInfoList(spuInfo);
         return spuInfoList;
     }
+
+    @RequestMapping("baseSaleAttrList")
+    @ResponseBody
+    public List<BaseSaleAttr> getBaseSaleAttrList(){
+        return manageService.getBaseSaleAttrList();
+    }
+
+
+    @RequestMapping("saveSpuInfo")
+    @ResponseBody
+    public String saveSpuInfo(SpuInfo spuInfo){
+        manageService.saveSpuInfo(spuInfo);
+        return "success";
+    }
+
 
 
 }

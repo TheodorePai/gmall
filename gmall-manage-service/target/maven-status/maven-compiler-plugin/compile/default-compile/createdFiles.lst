@@ -1,1 +1,5 @@
+cn\theo\gmall\manage\mapper\SpuImageMapper.class
+cn\theo\gmall\manage\mapper\BaseSaleAttrMapper.class
+cn\theo\gmall\manage\mapper\SpuSaleAttrMapper.class
 cn\theo\gmall\manage\service\impl\ManageServiceImpl.class
+cn\theo\gmall\manage\mapper\SpuSaleAttrValueMapper.class

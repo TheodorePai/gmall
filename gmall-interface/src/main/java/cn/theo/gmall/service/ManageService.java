@@ -21,4 +21,10 @@ public interface ManageService {
 
     List<SpuInfo> getSpuInfoList(SpuInfo spuInfo);
 
+    // 查询基本销售属性表
+    List<BaseSaleAttr> getBaseSaleAttrList();
+
+    //保存事件
+    void saveSpuInfo(SpuInfo spuInfo);
+
 }

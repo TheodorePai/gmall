@@ -1,10 +1,8 @@
 package cn.theo.gmall.bean;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 public class SpuInfo implements Serializable {
     @Column
@@ -21,6 +19,13 @@ public class SpuInfo implements Serializable {
     @Column
     private  String catalog3Id;
 
+
+    @Transient
+    private List<SpuSaleAttr> spuSaleAttrList;
+
+    @Transient
+    private List<SpuImage> spuImageList;
+
     public SpuInfo() {
     }
 
@@ -28,6 +33,14 @@ public class SpuInfo implements Serializable {
         this.spuName = spuName;
         this.description = description;
         this.catalog3Id = catalog3Id;
+    }
+
+    public SpuInfo(String spuName, String description, String catalog3Id, List<SpuSaleAttr> spuSaleAttrList, List<SpuImage> spuImageList) {
+        this.spuName = spuName;
+        this.description = description;
+        this.catalog3Id = catalog3Id;
+        this.spuSaleAttrList = spuSaleAttrList;
+        this.spuImageList = spuImageList;
     }
 
     public String getId() {
@@ -62,6 +75,22 @@ public class SpuInfo implements Serializable {
         this.catalog3Id = catalog3Id;
     }
 
+    public List<SpuSaleAttr> getSpuSaleAttrList() {
+        return spuSaleAttrList;
+    }
+
+    public void setSpuSaleAttrList(List<SpuSaleAttr> spuSaleAttrList) {
+        this.spuSaleAttrList = spuSaleAttrList;
+    }
+
+    public List<SpuImage> getSpuImageList() {
+        return spuImageList;
+    }
+
+    public void setSpuImageList(List<SpuImage> spuImageList) {
+        this.spuImageList = spuImageList;
+    }
+
     @Override
     public String toString() {
         return "SpuInfo{" +
@@ -69,6 +98,8 @@ public class SpuInfo implements Serializable {
                 ", spuName='" + spuName + '\'' +
                 ", description='" + description + '\'' +
                 ", catalog3Id='" + catalog3Id + '\'' +
+                ", spuSaleAttrList=" + spuSaleAttrList +
+                ", spuImageList=" + spuImageList +
                 '}';
     }
 }

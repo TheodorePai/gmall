@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: cn.theo.gmall.manage.GmallManageWebApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.989 sec - in cn.theo.gmall.manage.GmallManageWebApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.292 sec - in cn.theo.gmall.manage.GmallManageWebApplicationTests
